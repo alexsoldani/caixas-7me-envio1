@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1f3864">
+<title>Caixas 7me — 1º Envio (Salvas Ofertório)</title>
+<style>
+  :root{
+    --azul:#1f3864; --azul2:#2f5391; --bg:#eef1f6; --card:#ffffff;
+    --txt:#12203a; --mut:#5b6b85; --line:#d5dced;
+    --ok:#0f7b3f; --okbg:#e4f6ea;
+    --aviso:#9c6500; --avisobg:#fff5da;
+    --raio:12px;
+    --p1:#2563eb; --p2:#7c3aed; --p3:#0d9488;
+    --sombra:0 1px 2px rgba(18,32,58,.08), 0 6px 16px -8px rgba(18,32,58,.28);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--txt);
+    font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    -webkit-text-size-adjust:100%;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .wrap{max-width:1400px;margin:0 auto;padding:0 12px 28px}
+
+  header.topo{
+    background:linear-gradient(135deg,var(--azul),var(--azul2));
+    color:#fff;padding:14px 12px 12px;margin-bottom:12px;
+  }
+  header.topo .inner{max-width:1400px;margin:0 auto}
+  h1{margin:0;font-size:19px;letter-spacing:.2px}
+  .sub{margin:4px 0 0;font-size:12.5px;opacity:.9}
+  .totais{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .tot{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);
+       border-radius:10px;padding:6px 10px;font-size:12px;min-width:96px}
+  .tot b{display:block;font-size:18px;line-height:1.2}
+  .barra{height:8px;background:rgba(255,255,255,.25);border-radius:99px;margin-top:12px;overflow:hidden}
+  .barra i{display:block;height:100%;width:0;background:#7ee2a8;border-radius:99px;transition:width .25s ease}
+
+  .ferramentas{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--raio);
+    padding:10px;margin-bottom:12px;box-shadow:var(--sombra);
+  }
+  .ferramentas input[type=search]{
+    flex:1 1 190px;min-width:150px;padding:9px 11px;border:1px solid var(--line);
+    border-radius:9px;font-size:14px;background:#fbfcfe;color:var(--txt)
+  }
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{
+    border:1px solid var(--line);background:#f7f9fd;color:var(--mut);
+    border-radius:99px;padding:7px 12px;font-size:12.5px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px
+  }
+  .chip[aria-pressed=true]{background:var(--azul);border-color:var(--azul);color:#fff}
+  .chip .dot{width:9px;height:9px;border-radius:50%;background:currentColor;opacity:.85}
+  button.acao{
+    border:1px solid var(--line);background:#fff;color:var(--txt);border-radius:9px;
+    padding:9px 12px;font-size:13px;cursor:pointer
+  }
+  button.acao:hover{background:#f4f7fd}
+  button.acao.primaria{background:var(--azul);border-color:var(--azul);color:#fff}
+  button.acao.primaria:hover{background:var(--azul2)}
+  .salvo{font-size:11.5px;color:var(--mut);margin-left:auto}
+
+  .board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start}
+  .col{
+    background:#e3e8f2;border:1px solid var(--line);border-radius:var(--raio);
+    min-height:140px;display:flex;flex-direction:column
+  }
+  .col.alvo{outline:3px solid var(--azul2);outline-offset:2px;background:#dbe4f6}
+  .col h2{
+    margin:0;padding:10px 12px;font-size:13.5px;letter-spacing:.3px;
+    display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line)
+  }
+  .col h2 .n{
+    margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:99px;
+    padding:1px 8px;font-size:11.5px;color:var(--mut);font-weight:600
+  }
+  .col .dica{padding:6px 12px 0;font-size:11px;color:var(--mut)}
+  .lista{padding:10px;display:flex;flex-direction:column;gap:9px;flex:1}
+  .vazio{border:1px dashed #b9c4da;border-radius:10px;padding:14px;text-align:center;
+         color:#7d8aa2;font-size:12px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-left:5px solid var(--p2);
+    border-radius:10px;padding:10px;box-shadow:var(--sombra);cursor:grab;touch-action:manipulation;
+    position:relative
+  }
+  .card[data-pastor="Gladson Oliveira de Souza"]{border-left-color:var(--p1)}
+  .card[data-pastor="Edivan José de Oliveira"]{border-left-color:var(--p2)}
+  .card[data-pastor="Wadir Pereira Da Silva"]{border-left-color:var(--p3)}
+  .card.conferido{background:var(--okbg);border-color:#9fd8b6}
+  .card.arrastando{opacity:.35}
+  .card h3{margin:0 0 3px;font-size:14.5px;line-height:1.25;padding-right:38px}
+  .card .pastor{margin:0;font-size:11.5px;color:var(--mut)}
+  .qtd{
+    position:absolute;top:9px;right:9px;background:var(--azul);color:#fff;
+    border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700
+  }
+  .card .acoes{display:flex;gap:6px;margin-top:9px;align-items:center}
+  .mv,.ok{
+    border:1px solid var(--line);background:#f8fafe;border-radius:8px;cursor:pointer;
+    font-size:12px;padding:6px 9px;color:var(--txt);line-height:1
+  }
+  .mv[disabled]{opacity:.35;cursor:default}
+  .ok{margin-left:auto;font-size:11.5px}
+  .card.conferido .ok{background:var(--ok);border-color:var(--ok);color:#fff}
+  .clone{
+    position:fixed;z-index:9999;pointer-events:none;width:230px;
+    box-shadow:0 18px 40px -10px rgba(18,32,58,.5);transform:rotate(-1.5deg);opacity:.97
+  }
+
+  footer.rodape{margin-top:16px;font-size:12px;color:var(--mut);line-height:1.6}
+  footer.rodape code{background:#e7ecf6;padding:1px 5px;border-radius:5px}
+  .aviso-final{margin-top:10px;padding:10px 12px;background:#fff;border:1px solid var(--line);
+               border-radius:10px;font-size:12.5px;color:var(--mut)}
+
+  @media (max-width:820px){
+    .board{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+           padding-bottom:8px;-webkit-overflow-scrolling:touch}
+    .col{flex:0 0 86%;scroll-snap-align:start}
+    h1{font-size:17px}
+    .salvo{margin-left:0;width:100%}
+  }
+  @media print{
+    body{background:#fff}
+    .ferramentas,.sub,.barra,.totais,.mv,.ok,.aviso-final{display:none!important}
+    header.topo{background:#fff;color:#000;padding:0 0 8px}
+    .board{display:block}
+    .col{border:1px solid #999;margin-bottom:10px;background:#fff;break-inside:avoid}
+    .card{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="inner">
+    <h1>Caixas 7me — Salvas Ofertório · 1º Envio</h1>
+    <p class="sub">Arraste os cartões (ou use ‹ ›) para acompanhar o que já foi impresso, finalizado e enviado.</p>
+    <div class="totais">
+      <div class="tot">Caixas previstas<b id="tPrev">0</b></div>
+      <div class="tot">Impressas<b id="tImp">0</b></div>
+      <div class="tot">Finalizadas<b id="tFin">0</b></div>
+      <div class="tot">Enviadas<b id="tEnv">0</b></div>
+      <div class="tot">Falta imprimir<b id="tFalta">0</b></div>
+    </div>
+    <div class="barra"><i id="barra"></i></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="ferramentas">
+    <input type="search" id="busca" placeholder="Buscar igreja ou pastor…" aria-label="Buscar igreja ou pastor">
+    <div class="chips" id="chipsPastor" role="group" aria-label="Filtrar por pastor"></div>
+    <button class="acao primaria" id="btnResumo">Copiar resumo</button>
+    <button class="acao" id="btnExportar">Exportar</button>
+    <button class="acao" id="btnImportar">Importar</button>
+    <button class="acao" id="btnZerar">Zerar</button>
+    <input type="file" id="arquivo" accept="application/json,.json" hidden>
+    <span class="salvo" id="salvo"></span>
+  </div>
+
+  <main class="board" id="board"></main>
+
+  <footer class="rodape">
+    <p><b>Como funciona:</b> o andamento fica salvo neste aparelho (no navegador). Para levar o quadro para outro celular ou PC, use <code>Exportar</code> aqui e <code>Importar</code> no outro aparelho.</p>
+    <p><b>Regra de cor:</b> cartão verde = conferido; a barra do topo mostra o quanto já foi enviado.</p>
+    <div class="aviso-final">
+      Cada cartão representa uma igreja com a sua quantidade de caixas (some todas as caixas daquela igreja ao mudar de etapa).
+      Se precisar movimentar caixa por caixa, é só pedir a versão com cartões individuais.
+      Última alteração salva: <span id="quando">—</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- dados: lista selecionada na planilha "Envio 1" ---------- */
+  var CARDS = [
+    { id: "af-01", pastor: "Gladson Oliveira de Souza", igreja: "Alta Floresta (Sede)", qtd: 6 },
+    { id: "af-02", pastor: "Gladson Oliveira de Souza", igreja: "Boa Nova", qtd: 2 },
+    { id: "af-03", pastor: "Gladson Oliveira de Souza", igreja: "Comunidade São Mateus", qtd: 2 },
+    { id: "af-04", pastor: "Gladson Oliveira de Souza", igreja: "Jardim Panorama", qtd: 2 },
+    { id: "af-05", pastor: "Gladson Oliveira de Souza", igreja: "Jardim Universitário (Alta Floresta)", qtd: 2 },
+    { id: "cc-01", pastor: "Edivan José de Oliveira", igreja: "Cáceres sede", qtd: 2 },
+    { id: "cc-02", pastor: "Edivan José de Oliveira", igreja: "Carvalhada", qtd: 2 },
+    { id: "cc-03", pastor: "Edivan José de Oliveira", igreja: "Jd Padre Paulo", qtd: 2 },
+    { id: "cc-04", pastor: "Edivan José de Oliveira", igreja: "Vila Irene", qtd: 2 },
+    { id: "cc-05", pastor: "Edivan José de Oliveira", igreja: "Residencial Aeroporto", qtd: 2 },
+    { id: "jp-01", pastor: "Wadir Pereira Da Silva", igreja: "Agrovila Nova", qtd: 2 },
+    { id: "jp-02", pastor: "Wadir Pereira Da Silva", igreja: "Agrovila Nova Fronteira", qtd: 2 },
+    { id: "jp-03", pastor: "Wadir Pereira Da Silva", igreja: "Jardim Araguaia", qtd: 2 },
+    { id: "jp-04", pastor: "Wadir Pereira Da Silva", igreja: "Jardim Boa Esperança", qtd: 2 },
+    { id: "jp-05", pastor: "Wadir Pereira Da Silva", igreja: "Jardim das Palmeiras (sede)", qtd: 2 },
+    { id: "jp-06", pastor: "Wadir Pereira Da Silva", igreja: "Jardim Maria Vindilina", qtd: 2 },
+    { id: "jp-07", pastor: "Wadir Pereira Da Silva", igreja: "Núcleo Campos Novos", qtd: 2 },
+    { id: "jp-08", pastor: "Wadir Pereira Da Silva", igreja: "Vitória Régia (Jardim das Palmeiras)", qtd: 2 }
+  ];
+
+  var STAGES = [
+    { id: "fila",       nome: "A imprimir",  dica: "ainda não impressas" },
+    { id: "impresso",   nome: "Impressas",   dica: "impressas, aguardando finalização" },
+    { id: "finalizado", nome: "Finalizadas", dica: "prontas para envio" },
+    { id: "enviado",    nome: "Enviadas",    dica: "já saíram" }
+  ];
+
+  var CHAVE = "caixas7me.envio1.v1";
+  var PASTORES = [];
+  CARDS.forEach(function (c) { if (PASTORES.indexOf(c.pastor) < 0) PASTORES.push(c.pastor); });
+
+  var stage = {}, check = {}, quando = "", filtroPastor = "todos", busca = "";
+
+  /* ---------- armazenamento ---------- */
+  function carregar() {
+    var bruto = null;
+    try { bruto = window.localStorage.getItem(CHAVE); } catch (e) { bruto = null; }
+    CARDS.forEach(function (c) { stage[c.id] = "fila"; check[c.id] = false; });
+    if (!bruto) return;
+    var d;
+    try { d = JSON.parse(bruto); } catch (e) { return; }
+    aplicar(d, true);
+  }
+
+  function aplicar(d, silencioso) {
+    if (!d || typeof d !== "object") throw new Error("formato inválido");
+    var st = d.stage || {}, ck = d.check || {};
+    CARDS.forEach(function (c) {
+      if (STAGES.some(function (s) { return s.id === st[c.id]; })) stage[c.id] = st[c.id];
+      else stage[c.id] = "fila";
+      check[c.id] = ck[c.id] === true;
+    });
+    quando = typeof d.quando === "string" ? d.quando : "";
+    if (!silencioso) salvar();
+  }
+
+  function salvar() {
+    quando = new Date().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
+    var d = { v: 1, quando: quando, stage: stage, check: check };
+    try { window.localStorage.setItem(CHAVE, JSON.stringify(d)); } catch (e) {}
+    document.getElementById("quando").textContent = quando;
+    document.getElementById("salvo").textContent = "Salvo neste aparelho às " + quando;
+  }
+
+  /* ---------- utilidades ---------- */
+  function semAcento(s) {
+    return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+  function caixasNaEtapa(etapa) {
+    return CARDS.reduce(function (t, c) { return stage[c.id] === etapa ? t + c.qtd : t; }, 0);
+  }
+  function passaFiltro(c) {
+    if (filtroPastor !== "todos" && c.pastor !== filtroPastor) return false;
+    if (!busca) return true;
+    var alvo = semAcento(c.igreja + " " + c.pastor);
+    return alvo.indexOf(semAcento(busca)) >= 0;
+  }
+  function escapa(s) {
+    return String(s).replace(/[&<>"']/g, function (m) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m];
+    });
+  }
+
+  /* ---------- montagem ---------- */
+  var board = document.getElementById("board");
+
+  function montarQuadro() {
+    board.innerHTML = "";
+    STAGES.forEach(function (s, i) {
+      var col = document.createElement("section");
+      col.className = "col";
+      col.dataset.etapa = s.id;
+      col.innerHTML =
+        '<h2>' + escapa(s.nome) + '<span class="n" data-n="' + s.id + '">0 caixas</span></h2>' +
+        '<p class="dica">' + escapa(s.dica) + '</p>' +
+        '<div class="lista" data-lista="' + s.id + '"></div>';
+      col.addEventListener("pointerup", function () { /* tratado no drag global */ });
+      board.appendChild(col);
+    });
+    pintar();
+  }
+
+  function cartaoEl(c) {
+    var el = document.createElement("article");
+    el.className = "card" + (check[c.id] ? " conferido" : "");
+    el.dataset.id = c.id;
+    el.dataset.pastor = c.pastor;
+    var i = STAGES.findIndex(function (s) { return s.id === stage[c.id]; });
+    el.innerHTML =
+      '<span class="qtd">' + c.qtd + '</span>' +
+      '<h3>' + escapa(c.igreja) + '</h3>' +
+      '<p class="pastor">' + escapa(c.pastor) + '</p>' +
+      '<div class="acoes">' +
+        '<button class="mv" data-dir="-1"' + (i === 0 ? " disabled" : "") + ' aria-label="Voltar etapa">‹</button>' +
+        '<button class="mv" data-dir="1"' + (i === STAGES.length - 1 ? " disabled" : "") + ' aria-label="Avançar etapa">›</button>' +
+        '<button class="ok" aria-pressed="' + (check[c.id] ? "true" : "false") + '">' +
+          (check[c.id] ? "Conferido ✓" : "Conferir") + '</button>' +
+      '</div>';
+    return el;
+  }
+
+  function pintar() {
+    STAGES.forEach(function (s) {
+      var lista = board.querySelector('[data-lista="' + s.id + '"]');
+      lista.innerHTML = "";
+      var itens = CARDS.filter(function (c) { return stage[c.id] === s.id && passaFiltro(c); });
+      if (!itens.length) {
+        var v = document.createElement("div");
+        v.className = "vazio";
+        v.textContent = "nenhuma igreja aqui";
+        lista.appendChild(v);
+      } else {
+        itens.forEach(function (c) { lista.appendChild(cartaoEl(c)); });
+      }
+      var n = board.querySelector('[data-n="' + s.id + '"]');
+      if (n) n.textContent = caixasNaEtapa(s.id) + " caixas · " +
+        CARDS.filter(function (c) { return stage[c.id] === s.id; }).length + " igrejas";
+    });
+    pintarTotais();
+  }
+
+  function pintarTotais() {
+    var prev = CARDS.reduce(function (t, c) { return t + c.qtd; }, 0);
+    var imp = caixasNaEtapa("impresso") + caixasNaEtapa("finalizado") + caixasNaEtapa("enviado");
+    var fin = caixasNaEtapa("finalizado") + caixasNaEtapa("enviado");
+    var env = caixasNaEtapa("enviado");
+    document.getElementById("tPrev").textContent = prev;
+    document.getElementById("tImp").textContent = imp;
+    document.getElementById("tFin").textContent = fin;
+    document.getElementById("tEnv").textContent = env;
+    document.getElementById("tFalta").textContent = prev - imp;
+    document.getElementById("barra").style.width = (prev ? Math.round(env / prev * 100) : 0) + "%";
+  }
+
+  /* ---------- movimentação ---------- */
+  function mover(id, dir) {
+    var i = STAGES.findIndex(function (s) { return s.id === stage[id]; });
+    var j = Math.min(STAGES.length - 1, Math.max(0, i + dir));
+    if (j === i) return;
+    stage[id] = STAGES[j].id;
+    salvar(); pintar();
+  }
+  function paraEtapa(id, etapa) {
+    if (!STAGES.some(function (s) { return s.id === etapa; })) return;
+    if (stage[id] === etapa) return;
+    stage[id] = etapa;
+    salvar(); pintar();
+  }
+
+  board.addEventListener("click", function (ev) {
+    var card = ev.target.closest ? ev.target.closest(".card") : null;
+    if (!card) return;
+    var id = card.dataset.id;
+    if (ev.target.closest(".mv")) {
+      mover(id, parseInt(ev.target.closest(".mv").dataset.dir, 10));
+    } else if (ev.target.closest(".ok")) {
+      check[id] = !check[id];
+      salvar(); pintar();
+    }
+  });
+
+  /* ---------- arrastar (mouse, toque e caneta) ---------- */
+  var arraste = null;
+
+  board.addEventListener("pointerdown", function (ev) {
+    var card = ev.target.closest ? ev.target.closest(".card") : null;
+    if (!card) return;
+    if (ev.target.closest(".mv") || ev.target.closest(".ok")) return;
+    if (ev.button !== undefined && ev.button !== 0) return;
+    arraste = {
+      id: card.dataset.id, el: card, x0: ev.clientX, y0: ev.clientY,
+      ativo: false, clone: null, alvo: null, pid: ev.pointerId, scroll: 0
+    };
+  });
+
+  window.addEventListener("pointermove", function (ev) {
+    if (!arraste || ev.pointerId !== arraste.pid) return;
+    var dx = ev.clientX - arraste.x0, dy = ev.clientY - arraste.y0;
+    if (!arraste.ativo) {
+      if (Math.abs(dx) < 7 && Math.abs(dy) < 7) return;
+      arraste.ativo = true;
+      arraste.el.classList.add("arrastando");
+      var cl = arraste.el.cloneNode(true);
+      cl.classList.add("clone");
+      cl.classList.remove("arrastando");
+      cl.style.width = arraste.el.getBoundingClientRect().width + "px";
+      document.body.appendChild(cl);
+      arraste.clone = cl;
+      try { arraste.el.setPointerCapture(ev.pointerId); } catch (e) {}
+    }
+    arraste.clone.style.left = (ev.clientX + 12) + "px";
+    arraste.clone.style.top = (ev.clientY - 24) + "px";
+    var el = document.elementFromPoint(ev.clientX, ev.clientY);
+    var col = el && el.closest ? el.closest(".col") : null;
+    if (col !== arraste.alvo) {
+      if (arraste.alvo) arraste.alvo.classList.remove("alvo");
+      if (col) col.classList.add("alvo");
+      arraste.alvo = col;
+    }
+    // rolagem automática nas laterais (telas pequenas)
+    var b = board.getBoundingClientRect();
+    if (board.scrollWidth > board.clientWidth) {
+      if (ev.clientX < b.left + 48) board.scrollLeft -= 12;
+      else if (ev.clientX > b.right - 48) board.scrollLeft += 12;
+    }
+    ev.preventDefault();
+  }, { passive: false });
+
+  function fimDoArraste(ev) {
+    if (!arraste || (ev && ev.pointerId !== arraste.pid)) return;
+    if (arraste.ativo) {
+      if (arraste.clone && arraste.clone.parentNode) arraste.clone.parentNode.removeChild(arraste.clone);
+      arraste.el.classList.remove("arrastando");
+      if (arraste.alvo) paraEtapa(arraste.id, arraste.alvo.dataset.etapa);
+      if (arraste.alvo) arraste.alvo.classList.remove("alvo");
+    }
+    arraste = null;
+  }
+  window.addEventListener("pointerup", fimDoArraste);
+  window.addEventListener("pointercancel", fimDoArraste);
+
+  /* ---------- filtros ---------- */
+  var chips = document.getElementById("chipsPastor");
+  function montarChips() {
+    var defs = [{ id: "todos", nome: "Todos" }].concat(PASTORES.map(function (p) {
+      return { id: p, nome: p.split(" ")[0] };
+    }));
+    chips.innerHTML = "";
+    defs.forEach(function (d) {
+      var b = document.createElement("button");
+      b.className = "chip";
+      b.type = "button";
+      b.dataset.pastor = d.id;
+      b.setAttribute("aria-pressed", String(filtroPastor === d.id));
+      b.innerHTML = '<span class="dot"></span>' + escapa(d.nome);
+      b.addEventListener("click", function () {
+        filtroPastor = d.id;
+        Array.prototype.forEach.call(chips.children, function (x) {
+          x.setAttribute("aria-pressed", String(x.dataset.pastor === filtroPastor));
+        });
+        pintar();
+      });
+      chips.appendChild(b);
+    });
+  }
+  document.getElementById("busca").addEventListener("input", function (ev) {
+    busca = ev.target.value; pintar();
+  });
+
+  /* ---------- exportar / importar / zerar ---------- */
+  document.getElementById("btnExportar").addEventListener("click", function () {
+    var d = { v: 1, quando: quando, stage: stage, check: check };
+    var txt = JSON.stringify(d, null, 2);
+    var b = new Blob([txt], { type: "application/json" });
+    var a = document.createElement("a");
+    var hoje = new Date().toISOString().slice(0, 10);
+    a.href = URL.createObjectURL(b);
+    a.download = "caixas-7me-envio1-" + hoje + ".json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  });
+
+  var arquivo = document.getElementById("arquivo");
+  document.getElementById("btnImportar").addEventListener("click", function () { arquivo.click(); });
+  arquivo.addEventListener("change", function () {
+    var f = arquivo.files && arquivo.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function () {
+      try {
+        aplicar(JSON.parse(String(r.result)), false);
+        pintar();
+        alert("Andamento importado com sucesso.");
+      } catch (e) {
+        alert("Não consegui ler esse arquivo. Use um JSON exportado por este próprio kanban.");
+      }
+      arquivo.value = "";
+    };
+    r.readAsText(f);
+  });
+
+  document.getElementById("btnZerar").addEventListener("click", function () {
+    if (!window.confirm("Zerar o andamento? Todas as igrejas voltam para \"A imprimir\".")) return;
+    CARDS.forEach(function (c) { stage[c.id] = "fila"; check[c.id] = false; });
+    salvar(); pintar();
+  });
+
+  /* ---------- resumo para o WhatsApp ---------- */
+  document.getElementById("btnResumo").addEventListener("click", function () {
+    var linhas = ["*Caixas 7me — Salvas Ofertório (1º Envio)*"];
+    STAGES.forEach(function (s) {
+      var itens = CARDS.filter(function (c) { return stage[c.id] === s.id; });
+      var cxs = itens.reduce(function (t, c) { return t + c.qtd; }, 0);
+      linhas.push("");
+      linhas.push("*" + s.nome + "* — " + cxs + " caixas (" + itens.length + " igrejas)");
+      itens.forEach(function (c) {
+        linhas.push("• " + c.igreja + " (" + c.qtd + ") — " + c.pastor.split(" ")[0]);
+      });
+    });
+    var prev = CARDS.reduce(function (t, c) { return t + c.qtd; }, 0);
+    linhas.push("");
+    linhas.push("Total: " + caixasNaEtapa("enviado") + " de " + prev + " caixas enviadas.");
+    var txt = linhas.join("\n");
+
+    function copiado() {
+      var b = document.getElementById("btnResumo");
+      var antes = b.textContent;
+      b.textContent = "Resumo copiado ✓";
+      setTimeout(function () { b.textContent = antes; }, 1800);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(copiado, function () { fallback(txt, copiado); });
+    } else {
+      fallback(txt, copiado);
+    }
+  });
+
+  function fallback(txt, cb) {
+    var t = document.createElement("textarea");
+    t.value = txt; t.setAttribute("readonly", "");
+    t.style.position = "fixed"; t.style.top = "-1000px";
+    document.body.appendChild(t); t.select();
+    try { document.execCommand("copy"); cb(); } catch (e) { alert(txt); }
+    document.body.removeChild(t);
+  }
+
+  /* ---------- início ---------- */
+  carregar();
+  montarChips();
+  montarQuadro();
+  if (quando) document.getElementById("quando").textContent = quando;
+  if (!document.getElementById("salvo").textContent) {
+    document.getElementById("salvo").textContent = "Andamento salvo neste aparelho";
+  }
+})();
+</script>
+</body>
+</html>
